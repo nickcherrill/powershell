@@ -2,7 +2,7 @@ DECLARE @user NVARCHAR(50)
 SET @user = N'USER ID GOES HERE'
 
 -- Check if user exists
-IF NOT EXISTS (SELECT  FROM sys.database_principals WHERE name = @user)
+IF NOT EXISTS (SELECT name FROM sys.database_principals WHERE name = @user)
 BEGIN
     DECLARE @sql NVARCHAR(MAX)
     SET @sql = N'CREATE USER [' + @user + '] FROM EXTERNAL PROVIDER;'
@@ -11,7 +11,7 @@ BEGIN
 END
 
 -- Wait for a short time to ensure the user is created before proceeding
-WAITFOR DELAY '000005'
+WAITFOR DELAY '00:00:05'
 
 -- Try to add the user to the roles - remove roles as appropriate
 BEGIN TRY
